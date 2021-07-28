@@ -7,7 +7,7 @@ async def magnet_files(magnet):
     with ThreadPoolExecutor(1) as pool:
         loop = asyncio.get_event_loop()
         command=f'webtorrent download "{magnet}" -s'
-        print(command)
+        #print(command)
         info = await loop.run_in_executor(pool, os.system,
                                    command
                                    )
@@ -15,8 +15,8 @@ async def magnet_files(magnet):
 async def play_file(magnet, index):
     with ThreadPoolExecutor(1) as pool:
         loop = asyncio.get_event_loop()
-        command=f'webtorrent download "{magnet}" -s {index} --mpv'
-        print(command)
+        command=f'webtorrent download "{magnet}" -s {index} --mpv -o "."'
+        #print(command)
         info = await loop.run_in_executor(pool, os.system,
                                    command
                                    )

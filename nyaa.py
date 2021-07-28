@@ -5,7 +5,7 @@ import asyncio
 from anime import Anime
 
 def get_list(query):
-    base_url = "https://nyaa.si/?f=0&c=0_0&q="
+    base_url = "https://nyaa.notmarek.com/?f=0&c=0_0&q="
     result_page = requests.get(base_url+query)
     soup = BeautifulSoup(result_page.text, 'html.parser')
     table_data = soup.find_all("tr")
@@ -24,17 +24,13 @@ def get_list(query):
         size = td_list[3].contents[0]
         date = td_list[4].contents[0]
         seeders = td_list[5].contents[0]
-        leechers = td_list[6].contents[0]
-        completed_downloads = td_list[7].contents[0]
+        # leechers = td_list[6].contents[0]
+        # completed_downloads = td_list[7].contents[0]
         
         anime = Anime(title=title,
                         magnet=magnet,
                         size=size,
-                        date=date,
-                        seeders=seeders,
-                        leechers=leechers,
-                        completed_downloads=completed_downloads)
-        
+                        seeders=seeders)
         anime_mag_list.append(anime)
     
     return anime_mag_list
