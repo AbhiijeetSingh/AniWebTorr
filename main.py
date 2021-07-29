@@ -1,33 +1,24 @@
+from recents_store import RecentsStore
 import nyaa
 import torrent
-import asyncio
-from tabulate import tabulate
+from InquirerPy import inquirer
 
-async def main():
+def configure_arg_parse(parser):
+    pass
+
+def main():
     
     query = input("Enter the anime name: ")
-    query = query.replace(" ", "+")
-
-    anime_mag_list = nyaa.get_list(query)
-
-    table = [["Index", "Title", "Size", "Seeders"]] 
-
-    for index in range(len(anime_mag_list)):
-        title = anime_mag_list[index].get_title()[:50]+"..."
-        size = anime_mag_list[index].get_size()
-        seeders = anime_mag_list[index].get_seeders()
-        table.append([index, title, size, seeders])
+    nyaa_entries = nyaa.get_list(query)
+    recent_store = RecentsStore()
+    if len(nyaa_entries) > 0:
+        chosen_nyaa_entry = inquirer.select(
+            message = "Select a nyaa entry",
+            choices = nyaa_entries[:15]
+        ).execute()
+        recent_store.add_entry(chosen_nyaa_entry)
+    else:
+        print("No Results Found")
     
-    print(tabulate(table,))
-    
-    selected_index = int(input("\nEnter index: "))
-    selected_title = anime_mag_list[selected_index].get_title()
-    selected_magnet = anime_mag_list[selected_index].get_magnet()
-    selected_size = anime_mag_list[selected_index].get_size()
-    selected_seeders = anime_mag_list[selected_index].get_seeders()
-
-    print(f"{selected_title} {selected_magnet} {selected_size} {selected_seeders}")
-
-    await torrent.run(magnet=selected_magnet)
-
-asyncio.run(main())
+    print(recent_store.get_recents())
+main()

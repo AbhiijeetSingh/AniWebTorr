@@ -1,11 +1,10 @@
-import requests
 from bs4 import BeautifulSoup
-import torrent
-import asyncio
-from anime import Anime
+from nyaa_entry import NyaaEntry
+import requests
 
 def get_list(query):
-    base_url = "https://nyaa.si/?f=0&c=0_0&q="
+    base_url = "https://nyaa.notmarek.com/?f=0&c=0_0&q="
+    query = query.strip().replace(" ", "+")
     result_page = requests.get(base_url+query)
     soup = BeautifulSoup(result_page.text, 'html.parser')
     table_data = soup.find_all("tr")
@@ -27,7 +26,7 @@ def get_list(query):
         leechers = td_list[6].contents[0]
         completed_downloads = td_list[7].contents[0]
         
-        anime = Anime(title=title,
+        anime = NyaaEntry(title=title,
                         magnet=magnet,
                         size=size,
                         date=date,
