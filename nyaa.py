@@ -19,6 +19,7 @@ def get_list(query):
         for link in links:
             if "comment" not in link["title"]:
                 title = link["title"]
+        torrent_file_url = "https://nyaa.notmarek.com" + td_list[2].find_all("a")[0]["href"]
         magnet = td_list[2].find_all("a")[1]["href"]
         size = td_list[3].contents[0]
         date = td_list[4].contents[0]
@@ -27,6 +28,7 @@ def get_list(query):
         completed_downloads = td_list[7].contents[0]
         
         anime = NyaaEntry(title=title,
+                        torrent_file_url = torrent_file_url,
                         magnet=magnet,
                         size=size,
                         date=date,

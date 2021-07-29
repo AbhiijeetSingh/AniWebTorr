@@ -1,6 +1,7 @@
 class NyaaEntry:
-    def __init__(self,title,magnet,size,date,seeders,leechers,completed_downloads) -> None:
+    def __init__(self,title,torrent_file_url,magnet,size,date,seeders,leechers,completed_downloads) -> None:
         self.title = title
+        self.torrent_file_url = torrent_file_url
         self.magnet=magnet
         self.size = size
         self.date = date
@@ -26,6 +27,9 @@ class NyaaEntry:
     def get_completed_dl(self):
         return self.completed_downloads
 
+    def get_torrent_file_url(self):
+        return self.torrent_file_url
+
     def __repr__(self):
         title = self.title if len(self.title) < 50 else f"{self.title[:47]}..."
         return f"|{title:60s}|{self.size:^8s}|{self.seeders:^5s}|"
@@ -36,6 +40,7 @@ class NyaaEntry:
     def to_dict(self):
         return {
         "title" : self.title,
+        "torrent_file_url" : self.torrent_file_url,
         "magnet" : self.magnet,
         "size" : self.size,
         "date" : self.date,
@@ -48,6 +53,7 @@ class NyaaEntry:
     def from_dict(cls, data_dict):
         return cls(
         title = data_dict["title"],
+        torrent_file_url = data_dict["torrent_file_url"],
         magnet = data_dict["magnet"],
         size = data_dict["size"],
         date = data_dict["date"],
