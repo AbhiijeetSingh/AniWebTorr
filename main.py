@@ -3,6 +3,7 @@ import nyaa
 import torrent
 from InquirerPy import inquirer
 import argparse
+import os
 
 def search_animes(args):
     query = args.query or inquirer.text(message = "Enter the anime name:").execute()
@@ -45,6 +46,8 @@ def configure_arg_parse(parser: argparse.ArgumentParser):
 
 def main():
     try:
+        if not os.path.exists("./web_torr_dls"):
+            os.makedirs("./web_torr_dls")
         parser = argparse.ArgumentParser(prog = "AniWebTorr")
         configure_arg_parse(parser)
         args = parser.parse_args()
