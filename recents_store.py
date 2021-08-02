@@ -2,6 +2,7 @@ from json.decoder import JSONDecodeError
 from typing import Iterator
 from nyaa_entry import NyaaEntry
 import json
+import os
 
 class RecentEntry(object):
     def __init__(self, title, magnet, size, seeders) -> None:
@@ -16,6 +17,8 @@ class RecentEntry(object):
 
 class RecentsStore(object):
     def __init__(self) -> None:
+        if not os.path.exists("recents.json"):
+            open('recents.json', 'a').close()
         self.__storage_file = "./recents.json"
 
         

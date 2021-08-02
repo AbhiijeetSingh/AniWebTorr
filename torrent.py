@@ -8,11 +8,11 @@ def delete_downloaded_files():
         shutil.rmtree("web_torr_dls")
 
 def print_torrent_files(torrent_id):
-    command=f'webtorrent download "{torrent_id}" -s'
+    command=f'webtorrent download "{torrent_id}" -s -o ./web_torr_dls'
     os.system(command)
 
 def play_file(torrent_id, index):
-    command=f'webtorrent download "{torrent_id}" -s {index} -o ./web_torr_dls --mpv'
+    command=f'webtorrent download "{torrent_id}" -s {index} -o ./web_torr_dls --mpv --not-on-top'
     os.system(command)
 
 def run(torrent_id = None):
