@@ -3,7 +3,7 @@ from nyaa_entry import NyaaEntry
 import requests
 
 def get_list(query):
-    base_url = "https://nyaa.notmarek.com/?f=0&c=0_0&q="
+    base_url = "https://nyaa.si/?f=0&c=0_0&q="
     query = query.strip().replace(" ", "+")
     result_page = requests.get(base_url+query)
     soup = BeautifulSoup(result_page.text, 'html.parser')
@@ -19,7 +19,7 @@ def get_list(query):
         for link in links:
             if "comment" not in link["title"]:
                 title = link["title"]
-        torrent_file_url = "https://nyaa.notmarek.com" + td_list[2].find_all("a")[0]["href"]
+        torrent_file_url = "https://nyaa.si" + td_list[2].find_all("a")[0]["href"]
         magnet = td_list[2].find_all("a")[1]["href"]
         size = td_list[3].contents[0]
         date = td_list[4].contents[0]
