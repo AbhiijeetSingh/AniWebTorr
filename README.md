@@ -15,6 +15,7 @@ the file which is to be played.
 
 Or use
 ```sh
-main.py recents```
+main.py recents
+```
 
 And select any recently watched anime from the results
