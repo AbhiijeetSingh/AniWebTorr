@@ -5,7 +5,11 @@ to download and open episodes directly in mpv.
 
 # Prerequisites
 Install webtorrent-cli. The process can be found [here](https://github.com/webtorrent/webtorrent-cli).
-Make sure that mpv is accessible via the terminal(it is added to the PATH)
+Make sure that mpv is accessible via the terminal(it is added to the PATH).
+After cloning the repository run install all the requirments using
+```sh
+pip install -r requirements.txt
+```
 
 # Usage
 
