@@ -4,15 +4,16 @@ from nyaa_entry import NyaaEntry
 import json
 import os
 
+
 class RecentEntry(object):
     def __init__(self, title, magnet, size, seeders) -> None:
         self.title = title
         self.magnet = magnet
         self.size = size
         self.seeders = seeders
-    
+
     def __repr__(self) -> str:
-        return f"" 
+        return f""
 
 
 class RecentsStore(object):
@@ -21,7 +22,6 @@ class RecentsStore(object):
             open('recents.json', 'a').close()
         self.__storage_file = "./recents.json"
 
-        
     def add_entry(self, nyaa_entry: NyaaEntry) -> None:
         assert isinstance(nyaa_entry, NyaaEntry), "Can only store NyaaEntries"
         with open(self.__storage_file, "r+") as f:
@@ -48,8 +48,8 @@ class RecentsStore(object):
     def close(self):
         self.__file.close()
 
+
 if __name__ == "__main__":
     store = RecentsStore()
     for r in store.get_recents():
         print(r)
-    
