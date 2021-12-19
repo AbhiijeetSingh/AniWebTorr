@@ -7,7 +7,17 @@ from nyaa_entry import NyaaEntry
 from NyaaPy import Nyaa
 
 
+def run_magnet(args):
+    # Plays the magnet link in mpv
+    link = args.link or inquirer.text(
+        message="Enter the magnet link:").execute()
+    webtorrentplay.run(link)
+
+
 def search_animes(args):
+    # Search nyaa.si for animes
+    # and then play the selected result
+    # using webtorrent
     query = args.query or inquirer.text(
         message="Enter the anime name:").execute()
     print(f"Searching for {query}")
@@ -34,6 +44,8 @@ def search_animes(args):
 
 
 def recents_anime(args):
+    # View recently watched animes
+    # and then play the selected result
     recent_store = RecentsStore()
     recent_animes = recent_store.get_recents()
     if len(recent_animes) > 0:
@@ -46,21 +58,27 @@ def recents_anime(args):
         print("No recent anime found!")
 
 
-def a(b):
-    print(b)
-
-
 def configure_arg_parse(parser: argparse.ArgumentParser):
     sub_parsers = parser.add_subparsers()  # dest="subcommand")
     search_parser = sub_parsers.add_parser(
         "search", help="Search nyaa.si for animes.")
     search_parser.set_defaults(func=search_animes)
-    # search_parser.set_defaults(func=a)
+
     search_parser.add_argument(
         "--query", "-q", dest="query", help="Search nyaa for the provided query.")
+
     recents_parser = sub_parsers.add_parser(
         "recents", help="View recently watched animes.")
+
     recents_parser.set_defaults(func=recents_anime)
+
+    magnet_parser = sub_parsers.add_parser(
+        "magnet", help="Play a magnet link.")
+
+    magnet_parser.add_argument(
+        "--link", "-l", dest="link", help="Play the provided magnet link.")
+
+    magnet_parser.set_defaults(func=run_magnet)
 
 
 def main():
