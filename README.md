@@ -27,3 +27,9 @@ main.py recents
 ```
 
 And select any recently watched anime from the results
+
+You can even use magnet links to play the video. just use
+
+```sh
+main.py magnet
+```
