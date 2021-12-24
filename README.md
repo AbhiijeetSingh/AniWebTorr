@@ -33,7 +33,7 @@ You can even use magnet links to play the video. just use
 main.py magnet
 ```
 
-You can also use SeaSmoke's Index inside the CLI to look for reccomendations from the index.
+You can also use SeaSmoke's Index inside the CLI to look for recommendation from the index.
 
 ```sh
 main.py smokes
