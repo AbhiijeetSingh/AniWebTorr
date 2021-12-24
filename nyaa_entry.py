@@ -3,7 +3,7 @@ class NyaaEntry:
         self.title = title
         self.torrent_file_url = torrent_file_url
         self.magnet = magnet
-        self.size = size
+        self.size = size.split(" ")
         self.date = date
         self.seeders = seeders
         self.leechers = leechers
@@ -16,7 +16,10 @@ class NyaaEntry:
         return self.magnet
 
     def get_size(self):
-        return self.size
+        if self.size[1] == "MiB":
+            return float(self.size[0]) / 1024
+        else:
+            return float(self.size[0])
 
     def get_seeders(self):
         return self.seeders
@@ -32,7 +35,7 @@ class NyaaEntry:
 
     def __repr__(self):
         title = self.title if len(self.title) < 50 else f"{self.title[:47]}..."
-        return f"|{title:60s}|{self.size:^8s}|{self.seeders:^5s}|"
+        return f"|{title:60s}|{str(self.get_size())+' GiB':^8s}|{self.seeders:^5s}|"
 
     def __str__(self):
         return repr(self)

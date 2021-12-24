@@ -1,7 +1,6 @@
 # AniWebTorr
 
-A CLI to integrate the webtorrent-cli and get magnets from nyaa.si using [NyaaPy](https://github.com/JuanjoSalvador/NyaaPy), 
-to download and open episodes directly in mpv.
+A CLI to integrate the webtorrent-cli and get magnets from nyaa.si using [NyaaPy](https://github.com/JuanjoSalvador/NyaaPy), to download and open episodes directly in mpv.
 
 # Prerequisites
 Install webtorrent-cli. The process can be found [here](https://github.com/webtorrent/webtorrent-cli).
@@ -32,4 +31,10 @@ You can even use magnet links to play the video. just use
 
 ```sh
 main.py magnet
+```
+
+You can also use SeaSmoke's Index inside the CLI to look for reccomendations from the index.
+
+```sh
+main.py smokes
 ```

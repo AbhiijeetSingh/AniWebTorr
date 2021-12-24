@@ -5,6 +5,45 @@ import os
 import webtorrentplay
 from nyaa_entry import NyaaEntry
 from NyaaPy import Nyaa
+import smokes
+
+
+def smokes_releases(args):
+    # Search smokes database for animes
+    # and then play the selected result
+    final_result = []
+    query = args.query or inquirer.text(
+        "What would you like to search for?", default="").execute()
+    print(f"Searching for {query}")
+    smokes_json = smokes.get_json(query)
+    title = smokes_json['title']
+    releases = smokes.get_releases(smokes_json)
+    for release_type in releases:
+        print(f"{release_type}"+15*"-")
+        for release in releases[release_type]:
+            print(f"{title} {release} - {releases[release_type][release]}")
+            nyaa_result = Nyaa.search(
+                keyword=f"[{releases[release_type][release]}]{title} {release}")
+            if len(nyaa_result) > 0:
+                nyaa_entries = [NyaaEntry(entry['name'],
+                                          entry['download_url'],
+                                          entry['magnet'],
+                                          entry['size'],
+                                          entry['date'],
+                                          entry['seeders'],
+                                          entry['leechers'],
+                                          entry['completed_downloads']) for entry in nyaa_result]
+                nyaa_entries.sort(key=lambda x: x.get_size(), reverse=True)
+                final_result.append(nyaa_entries[0])
+    if len(final_result) > 0:
+        chosen_entry = inquirer.select(
+            message="Select a nyaa entry.",
+            choices=final_result
+        ).execute()
+        recent_store = RecentsStore()
+        recent_store.add_entry(chosen_entry)
+
+        webtorrentplay.run(chosen_entry.get_torrent_file_url())
 
 
 def run_magnet(args):
@@ -79,6 +118,14 @@ def configure_arg_parse(parser: argparse.ArgumentParser):
         "--link", "-l", dest="link", help="Play the provided magnet link.")
 
     magnet_parser.set_defaults(func=run_magnet)
+
+    smokes_parser = sub_parsers.add_parser(
+        "smokes", help="Play smokes reccomendation of anime from nyaa.si.")
+
+    smokes_parser.add_argument(
+        "--query", "-q", dest="query", help="Search smokes database for the provided query.")
+
+    smokes_parser.set_defaults(func=smokes_releases)
 
 
 def main():
