@@ -3,7 +3,14 @@ class NyaaEntry:
         self.title = title
         self.torrent_file_url = torrent_file_url
         self.magnet = magnet
-        self.size = size.split(" ")
+
+        if type(size) == str:
+            size = size.split(" ")
+            self.size = float(
+                size[0]) / 1024 if size[1] == "MiB" else float(size[0])
+        else:
+            self.size = size
+
         self.date = date
         self.seeders = seeders
         self.leechers = leechers
@@ -16,10 +23,7 @@ class NyaaEntry:
         return self.magnet
 
     def get_size(self):
-        if self.size[1] == "MiB":
-            return float(self.size[0]) / 1024
-        else:
-            return float(self.size[0])
+        return self.size
 
     def get_seeders(self):
         return self.seeders
