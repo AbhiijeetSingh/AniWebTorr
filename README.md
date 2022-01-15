@@ -34,6 +34,7 @@ main.py magnet
 ```
 
 You can also use SeaSmoke's Index inside the CLI to look for recommendation from the index.
+(Using https://github.com/DhanrajHira/seadex_api)
 
 ```sh
 main.py smokes
